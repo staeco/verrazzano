@@ -1,6 +1,6 @@
 import through2 from 'through2'
 import pumpify from 'pumpify'
-import fileParser from '../parser/file'
+import fileParser from '../reading/file'
 
 const heartRegex = /<gpxtpx:hr>(\d*)<\/gpxtpx:hr>/
 
