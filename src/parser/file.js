@@ -5,11 +5,10 @@ const wgs84 = gdal.SpatialReference.fromEPSG(4326)
 
 // GDAL File -> GeoJSON Features
 // Inspired by shp2json
-export default (f) => {
-  const file = gdal.open(f)
+export default (path) => {
+  const file = gdal.open(path)
   const layerCount = file.layers.count()
   let nextLayer = 0
-  let isFirstFeature = true
   let currentLayer, currentTransformation
 
   const getNextLayer = () => {
@@ -22,8 +21,8 @@ export default (f) => {
 
   getNextLayer()
 
-  return from(function (size, next) {
-    let out = ''
+  return from.obj(function (size, next) {
+    let pushed = 0
     const writeFeature = () => {
       const isLastLayer = nextLayer === layerCount
 
@@ -31,8 +30,7 @@ export default (f) => {
       let feature = currentLayer.features.next()
       if (!feature) {
         if (isLastLayer) {
-          // we hit the end of the final layer, push remaining output and finish
-          this.push(out)
+          // we hit the end of the final layer, finish
           this.push(null)
           return
         }
@@ -55,11 +53,9 @@ export default (f) => {
         properties: feature.fields.toObject(),
         geometry: geometry.toObject()
       }
-      if (!isFirstFeature) out += ','
-      out += JSON.stringify(featureObject)
-      isFirstFeature = false
-
-      if (out.length >= size) return next(null, out) // no more space available to write, write what we have and wait
+      ++pushed
+      this.push(featureObject)
+      if (pushed >= size) return next(null) // no more space available to write, write what we have and wait
       writeFeature() // more space available to write, go to next feature in layer
     }
     writeFeature()

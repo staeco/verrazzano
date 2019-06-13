@@ -14,7 +14,7 @@ describe('from(shp)', () => {
   it('should translate a shapefile to geojson', async () => {
     const inp = fs.createReadStream(shapeFile)
     const stream = inp.pipe(from('shp'))
-    const res = await collect(stream)
-    should(JSON.parse(res)).eql(JSON.parse(expectedGeoFile))
+    const res = await collect.array(stream)
+    should(res).eql(JSON.parse(expectedGeoFile).features)
   })
 })

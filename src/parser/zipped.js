@@ -5,21 +5,13 @@ import merge from 'merge2'
 import unzip from '../unzip'
 import gdalParser from './file'
 
-const before = '{"type":"FeatureCollection","features":['
-const after = ']}'
-
-
 // Outputs GeoJSON Features
-export default (fileFilter) => {
+export default (fileFilter, parser=gdalParser) => {
   const inStream = through2()
-  const outStream = merge()
+  const outStream = merge({ objectMode: true })
   const out = duplexify.obj(inStream, outStream)
 
   // start the work
-  outStream.write(before)
-  outStream.once('queueDrain', () => {
-    outStream.write(after)
-  })
   unzip(inStream, fileFilter)
     .catch((err) => {
       inStream.emit('error', err) // triggers destroy of everything
@@ -28,7 +20,7 @@ export default (fileFilter) => {
       finished(out, done)
       files.forEach((f) => {
         try {
-          outStream.add(gdalParser(f))
+          outStream.add(parser(f))
         } catch (err) {
           out.destroy(err)
         }

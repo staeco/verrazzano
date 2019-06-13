@@ -1,5 +1,14 @@
+import { pipeline } from 'stream'
+import fs from 'graceful-fs'
+import kml from 'kml-stream'
 import zippedParser from '../parser/zipped'
 
 // Outputs GeoJSON Features
 const fileFilter = (path) => path.match(/\.kml$/i)
-export default () => zippedParser(fileFilter)
+const parser = (path) =>
+  pipeline(
+    fs.createReadStream(path),
+    kml()
+  )
+
+export default () => zippedParser(fileFilter, parser)
