@@ -1,6 +1,7 @@
 import gdbInput from './inputs/gdb'
 import gpxInput from './inputs/gpx'
 import kmlInput from './inputs/kml'
+import kmzInput from './inputs/kmz'
 import shpInput from './inputs/shp'
 import gpxOutput from './outputs/gpx'
 import kmlOutput from './outputs/kml'
@@ -10,6 +11,7 @@ const inputs = {
   gdb: gdbInput,
   gpx: gpxInput,
   kml: kmlInput,
+  kmz: kmzInput,
   shp: shpInput
 }
 

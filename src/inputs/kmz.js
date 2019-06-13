@@ -1,9 +1,5 @@
-// KML Feature -> GeoJSON Feature
-export const format = () => {
-  // TODO
-}
+import zippedParser from '../parser/zipped'
 
 // Outputs GeoJSON Features
-export default () => {
-  // TODO
-}
+const fileFilter = (path) => path.match(/\.kml$/i)
+export default () => zippedParser(fileFilter)

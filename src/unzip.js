@@ -30,6 +30,7 @@ export default async (inStream, matcher) => {
     const matches = []
     const finder = findit(tmpFolder.path)
     finder.on('file', (f) => {
+      if (f.match(/__MACOSX/)) return // mac meta files
       if (matcher(f)) matches.push(f)
     })
     finder.once('error', reject)

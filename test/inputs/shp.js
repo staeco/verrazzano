@@ -15,6 +15,6 @@ describe('from(shp)', () => {
     const inp = fs.createReadStream(shapeFile)
     const stream = inp.pipe(from('shp'))
     const res = await collect(stream)
-    should.equal(res, expectedGeoFile)
+    should(JSON.parse(res)).eql(JSON.parse(expectedGeoFile))
   })
 })
