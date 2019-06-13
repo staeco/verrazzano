@@ -11,4 +11,4 @@ const parser = (path) =>
     kml()
   )
 
-export default () => zippedParser(fileFilter, parser)
+export default () => zippedParser({ fileFilter, parser })

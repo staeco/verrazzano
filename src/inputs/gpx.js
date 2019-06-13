@@ -27,16 +27,7 @@ export default () => {
     // every gpx should have time, but just in case treat it as if it were optional
     if (time) {
       if (!out.properties.times) out.properties.times = []
-      const utcTime = Date.UTC(
-        time.year || 0,
-        time.month - 1 || 0,
-        time.day || 0,
-        time.hour || 0,
-        time.minute - 1 || 0,
-        time.second || 0
-      )
-      const offset = 60000 * (time.timezone / 100)
-      out.properties.times.push(new Date(utcTime + offset).toISOString())
+      out.properties.times.push(time)
     }
 
     if (gpxtpx_TrackPointExtension) {
@@ -51,7 +42,7 @@ export default () => {
   }
 
   return pumpify.obj(
-    fileParser('gpx'),
+    fileParser({ extension: 'gpx' }),
     through2.obj(accumulate, function (cb) {
       this.push(out)
       cb()

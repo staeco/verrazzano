@@ -6,13 +6,13 @@ import unzip from '../files/unzip'
 import gdalParser from './parseFile'
 
 // Outputs GeoJSON Features
-export default (fileFilter, parser=gdalParser) => {
+export default ({ fileFilter, parser=gdalParser }) => {
   const inStream = through2()
   const outStream = merge({ objectMode: true })
   const out = duplexify.obj(inStream, outStream)
 
   // start the work
-  unzip(inStream, fileFilter)
+  unzip(inStream, { fileFilter })
     .catch((err) => {
       inStream.emit('error', err) // triggers destroy of everything
     })

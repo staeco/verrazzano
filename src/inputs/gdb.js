@@ -1,9 +1,6 @@
-// GDB Feature -> GeoJSON Feature
-export const format = () => {
-  // TODO
-}
+import zippedParser from '../parser/zip'
 
 // Outputs GeoJSON Features
-export default () => {
-  // TODO
-}
+const fileFilter = (path) => path.match(/\.gdb$/i)
+export default () =>
+  zippedParser({ fileFilter })

@@ -6,7 +6,7 @@ import createFile from '../files/file'
 import gdalParser from './parseFile'
 
 // Outputs GeoJSON Features
-export default (extension, parser=gdalParser) => {
+export default ({ extension, parser=gdalParser }) => {
   const inStream = through2()
   const outStream = merge({ objectMode: true })
   const out = duplexify.obj(inStream, outStream)

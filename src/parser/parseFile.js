@@ -1,7 +1,30 @@
 import from from 'from2'
 import gdal from 'gdal'
+import mapValues from 'lodash.mapvalues'
 
 const wgs84 = gdal.SpatialReference.fromEPSG(4326)
+
+const isGDALDate = (v) =>
+  v && typeof v === 'object' && v.year != null && v.month != null && v.day != null
+
+const parseGDALDate = (time) => {
+  const utcTime = Date.UTC(
+    time.year || 0,
+    time.month - 1 || 0,
+    time.day || 0,
+    time.hour || 0,
+    time.minute - 1 || 0,
+    time.second || 0
+  )
+  if (!time.timezone) return new Date(utcTime).toISOString()
+  const offset = 60000 * (time.timezone / 100)
+  return new Date(utcTime + offset).toISOString()
+}
+
+const fixDates = (v) => {
+  if (!isGDALDate(v)) return v
+  return parseGDALDate(v)
+}
 
 // GDAL File -> GeoJSON Features
 // Inspired by shp2json
@@ -50,7 +73,7 @@ export default (path) => {
 
       const featureObject = {
         type: 'Feature',
-        properties: feature.fields.toObject(),
+        properties: mapValues(feature.fields.toObject(), fixDates),
         geometry: geometry.toObject()
       }
       ++pushed

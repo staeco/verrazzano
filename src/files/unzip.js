@@ -4,7 +4,7 @@ import { spawn } from 'child_process'
 import tmp from './tmp'
 
 // returns a stream that extracts specific files to a temp folder
-export default async (inStream, matcher) => {
+export default async (inStream, { fileFilter }) => {
   const tmpZip = tmp('.zip')
   const tmpFolder = tmp()
 
@@ -29,16 +29,19 @@ export default async (inStream, matcher) => {
   const files = await new Promise((resolve, reject) => {
     const matches = []
     const finder = findit(tmpFolder.path)
-    finder.on('file', (f) => {
+    const match = (f) => {
       if (f.match(/__MACOSX/)) return // mac meta files
-      if (matcher(f)) matches.push(f)
-    })
+      if (fileFilter(f)) matches.push(f)
+    }
+    finder.on('directory', match)
+    finder.on('file', match)
     finder.once('error', reject)
     finder.once('end', () => {
       resolve(matches)
     })
   })
   return {
+    folder: tmpFolder.path,
     files,
     done: () => {
       tmpFolder.destroy().catch(() => null)
