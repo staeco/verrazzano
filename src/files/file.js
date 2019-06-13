@@ -14,7 +14,7 @@ export default async (inStream, ext) => {
     )
   })
   return {
-    file: tmpFile,
+    file: tmpFile.path,
     done: () => {
       tmpFile.destroy().catch(() => null)
     }

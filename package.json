@@ -198,6 +198,7 @@
     "kml-stream": "^1.1.1",
     "merge2": "^1.2.3",
     "mkdirp": "^0.5.1",
+    "pumpify": "^2.0.0",
     "tempfile": "^3.0.0"
   }
 }
