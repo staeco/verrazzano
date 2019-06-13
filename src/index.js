@@ -3,22 +3,28 @@ import gpxInput from './inputs/gpx'
 import kmlInput from './inputs/kml'
 import kmzInput from './inputs/kmz'
 import shpInput from './inputs/shp'
+import geojsonInput from './inputs/geojson'
 import gpxOutput from './outputs/gpx'
 import kmlOutput from './outputs/kml'
+import kmzOutput from './outputs/kmz'
 import shpOutput from './outputs/shp'
+import geojsonOutput from './outputs/geojson'
 
 const inputs = {
   gdb: gdbInput,
   gpx: gpxInput,
   kml: kmlInput,
   kmz: kmzInput,
-  shp: shpInput
+  shp: shpInput,
+  geojson: geojsonInput
 }
 
 const outputs = {
   gpx: gpxOutput,
   kml: kmlOutput,
-  shp: shpOutput
+  kmz: kmzOutput,
+  shp: shpOutput,
+  geojson: geojsonOutput
 }
 
 

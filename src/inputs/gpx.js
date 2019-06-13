@@ -1,9 +1,4 @@
-// GPX Feature -> GeoJSON Feature
-export const format = () => {
-  // TODO
-}
+import fileParser from '../parser/file'
 
 // Outputs GeoJSON Features
-export default () => {
-  // TODO
-}
+export default () => fileParser('gpx')

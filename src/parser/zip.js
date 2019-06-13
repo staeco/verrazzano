@@ -2,8 +2,8 @@ import { finished } from 'stream'
 import duplexify from 'duplexify'
 import through2 from 'through2'
 import merge from 'merge2'
-import unzip from '../unzip'
-import gdalParser from './file'
+import unzip from '../files/unzip'
+import gdalParser from './parseFile'
 
 // Outputs GeoJSON Features
 export default (fileFilter, parser=gdalParser) => {

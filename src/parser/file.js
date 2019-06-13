@@ -1,63 +1,28 @@
-import from from 'from2'
-import gdal from 'gdal'
+import { finished } from 'stream'
+import duplexify from 'duplexify'
+import through2 from 'through2'
+import merge from 'merge2'
+import createFile from '../files/file'
+import gdalParser from './parseFile'
 
-const wgs84 = gdal.SpatialReference.fromEPSG(4326)
+// Outputs GeoJSON Features
+export default (extension, parser=gdalParser) => {
+  const inStream = through2()
+  const outStream = merge({ objectMode: true })
+  const out = duplexify.obj(inStream, outStream)
 
-// GDAL File -> GeoJSON Features
-// Inspired by shp2json
-export default (path) => {
-  const file = gdal.open(path)
-  const layerCount = file.layers.count()
-  let nextLayer = 0
-  let currentLayer, currentTransformation
-
-  const getNextLayer = () => {
-    currentLayer = file.layers.get(nextLayer++)
-    currentTransformation = new gdal.CoordinateTransformation(
-      currentLayer.srs || wgs84,
-      wgs84
-    )
-  }
-
-  getNextLayer()
-
-  return from.obj(function (size, next) {
-    let pushed = 0
-    const writeFeature = () => {
-      const isLastLayer = nextLayer === layerCount
-
-      // grab the feature we're working with
-      let feature = currentLayer.features.next()
-      if (!feature) {
-        if (isLastLayer) {
-          // we hit the end of the final layer, finish
-          this.push(null)
-          return
-        }
-        // we hit the end of the layer, go to the next layer and continue
-        getNextLayer()
-        feature = currentLayer.features.next()
-      }
-
-      // get the geometry and project the coordinates
-      let geometry
+  // start the work
+  createFile(inStream, extension)
+    .catch((err) => {
+      inStream.emit('error', err) // triggers destroy of everything
+    })
+    .then(({ file, done }) => {
+      finished(out, done)
       try {
-        geometry = feature.getGeometry()
-        geometry.transform(currentTransformation)
-      } catch (e) {
-        return writeFeature() // go to next feature in layer
+        outStream.add(parser(file))
+      } catch (err) {
+        out.destroy(err)
       }
-
-      const featureObject = {
-        type: 'Feature',
-        properties: feature.fields.toObject(),
-        geometry: geometry.toObject()
-      }
-      ++pushed
-      this.push(featureObject)
-      if (pushed >= size) return next(null) // no more space available to write, write what we have and wait
-      writeFeature() // more space available to write, go to next feature in layer
-    }
-    writeFeature()
-  })
+    })
+  return out
 }
