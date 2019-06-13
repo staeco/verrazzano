@@ -1,9 +1,3 @@
-// KML Feature -> GeoJSON Feature
-export const format = () => {
-  // TODO
-}
+import kml from 'kml-stream'
 
-// Outputs GeoJSON Features
-export default () => {
-  // TODO
-}
+export default () => kml()
