@@ -21,10 +21,8 @@ const parseGDALDate = (time) => {
   return new Date(utcTime + offset).toISOString()
 }
 
-const fixDates = (v) => {
-  if (!isGDALDate(v)) return v
-  return parseGDALDate(v)
-}
+const fixDates = (v) =>
+  isGDALDate(v) ? parseGDALDate(v) : v
 
 // GDAL File -> GeoJSON Features
 // Inspired by shp2json
