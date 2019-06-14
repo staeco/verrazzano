@@ -1,11 +1,10 @@
 {
-  "name": "mauro",
+  "name": "verrazzano",
   "version": "1.0.0",
-  "description": "Streaming geospatial format conversion - SHP/GDB/KML/etc. <-> GeoJSON",
+  "description": "Streaming geospatial format conversion",
   "main": "dist/index.js",
   "keywords": [
     "gdal",
-    "geojson",
     "format",
     "to json",
     "to geojson",
@@ -15,19 +14,20 @@
     "kmz",
     "gpx",
     "gdb",
+    "geojson",
     "stream",
     "streaming"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/staeco/mauro.git"
+    "url": "git+https://github.com/staeco/verrazzano.git"
   },
   "author": "Contra <yo@contra.io> (http://contra.io)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/staeco/mauro/issues"
+    "url": "https://github.com/staeco/verrazzano/issues"
   },
-  "homepage": "https://github.com/staeco/mauro#readme",
+  "homepage": "https://github.com/staeco/verrazzano#readme",
   "files": [
     "dist"
   ],
