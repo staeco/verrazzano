@@ -1,6 +1,6 @@
 import through2 from 'through2'
 import pumpify from 'pumpify'
-import fileParser from '../reading/file'
+import fromFile from '../reading/fromFile'
 
 const heartRegex = /<gpxtpx:hr>(\d*)<\/gpxtpx:hr>/
 
@@ -42,7 +42,7 @@ export default () => {
   }
 
   return pumpify.obj(
-    fileParser({ extension: 'gpx' }),
+    fromFile({ extension: 'gpx' }),
     through2.obj(accumulate, function (cb) {
       this.push(out)
       cb()

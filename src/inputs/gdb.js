@@ -1,6 +1,6 @@
-import zippedParser from '../reading/zip'
+import fromZip from '../reading/fromZip'
 
 // Outputs GeoJSON Features
 const fileFilter = (path) => path.match(/\.gdb$/i)
 export default () =>
-  zippedParser({ fileFilter })
+  fromZip({ fileFilter })

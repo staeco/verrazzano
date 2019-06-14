@@ -1,6 +1,6 @@
 import { pipeline } from 'stream'
 import fs from 'graceful-fs'
-import tmp from '../files/tmp'
+import tmp from '../fs/tmp'
 
 export default async (inStream, ext) => {
   const tmpFile = tmp(ext)

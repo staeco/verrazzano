@@ -1,9 +1,5 @@
-// GeoJSON Feature -> SHP Feature
-export const format = () => {
-  // TODO
-}
+import toFile from '../writing/toFile'
 
 // Outputs a SHP file stream
-export default () => {
-  // TODO
-}
+export default () =>
+  toFile('ESRI Shapefile')
