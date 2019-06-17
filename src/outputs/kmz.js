@@ -1,9 +1,5 @@
-// GeoJSON Feature -> KML Feature
-export const format = () => {
-  // TODO
-}
+import toZip from '../writing/toZip'
 
 // Outputs a KMZ file stream
-export default () => {
-  // TODO
-}
+export default (opt) =>
+  toZip({ driver: 'KML' }, opt)

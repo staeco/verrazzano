@@ -1,9 +1,5 @@
-// GeoJSON Feature -> KML Feature
-export const format = () => {
-  // TODO
-}
+import toFile from '../writing/toFile'
 
 // Outputs a KML file stream
-export default () => {
-  // TODO
-}
+export default (opt) =>
+  toFile({ driver: 'KML' }, opt)

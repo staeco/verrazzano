@@ -17,7 +17,7 @@ export default ({ extension, parser=gdalParser }) => {
     .then(({ file, done }) => {
       finished(out, done)
       try {
-        outStream.add(parser(file))
+        outStream.add(parser(file.path))
       } catch (err) {
         out.destroy(err)
       }

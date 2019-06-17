@@ -195,11 +195,13 @@
     "findit2": "^2.2.3",
     "from2": "^2.3.0",
     "gdal": "^0.9.8",
+    "is-iso-date": "^0.0.1",
     "kml-stream": "^1.1.1",
     "lodash.mapvalues": "^4.6.0",
     "merge2": "^1.2.3",
     "mkdirp": "^0.5.1",
     "pumpify": "^2.0.0",
-    "tempfile": "^3.0.0"
+    "tempfile": "^3.0.0",
+    "wkx": "^0.4.7"
   }
 }

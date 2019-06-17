@@ -1,5 +1,5 @@
-import toFile from '../writing/toFile'
+import toZip from '../writing/toZip'
 
 // Outputs a SHP file stream
-export default () =>
-  toFile('ESRI Shapefile')
+export default (opt) =>
+  toZip({ driver: 'ESRI Shapefile' }, opt)

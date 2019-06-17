@@ -4,7 +4,7 @@ import { spawn } from 'child_process'
 import tmp from './tmp'
 
 // returns a stream that extracts specific files to a temp folder
-export default async (inStream, { fileFilter }) => {
+export default async (inStream, { fileFilter, cleanup=true }) => {
   const tmpZip = tmp('.zip')
   const tmpFolder = tmp()
 
@@ -25,7 +25,7 @@ export default async (inStream, { fileFilter }) => {
       resolve()
     })
   })
-  await tmpZip.destroy()
+  if (cleanup) await tmpZip.destroy()
   const files = await new Promise((resolve, reject) => {
     const matches = []
     const finder = findit(tmpFolder.path)
