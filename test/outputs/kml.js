@@ -29,6 +29,7 @@ describe.skip('to(kml)', () => {
       to('kml')
     )
     const res = await collect(stream)
-    console.log('TODO', res)
+    console.log(res)
+    should.exist(res)
   })
 })
