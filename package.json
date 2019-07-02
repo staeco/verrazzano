@@ -37,7 +37,7 @@
     "clean": "rimraf dist",
     "lint": "eslint src test",
     "lint:fix": "eslint src test --fix",
-    "test": "mocha --require babel-register --recursive --reporter spec --bail --timeout 30000 && npm run lint"
+    "test": "mocha --require babel-register --recursive --reporter spec --bail --timeout 60000 && npm run lint"
   },
   "resolutions": {
     "end-of-stream": "github:isaacs/end-of-stream#custom-stream-premature-close-fix"
@@ -203,6 +203,7 @@
     "mkdirp": "^0.5.1",
     "pumpify": "^2.0.0",
     "tempfile": "^3.0.0",
+    "through2": "^3.0.1",
     "wkx": "^0.4.7"
   }
 }

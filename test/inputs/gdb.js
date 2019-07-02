@@ -10,7 +10,7 @@ describe('from(gdb)', () => {
   it('should not blow up on create', () => {
     should.exist(from('gdb'))
   })
-  it('should translate a shapefile to geojson', async () => {
+  it('should translate a gdb file to geojson', async () => {
     const inp = fs.createReadStream(shapeFile)
     const stream = inp.pipe(from('gdb'))
     const res = await collect.array(stream)
@@ -36,6 +36,16 @@ describe('from(gdb)', () => {
           38.63645239990683
         ]
       }
+    })
+  })
+  it('should end stream early', async () => {
+    const inp = fs.createReadStream(shapeFile)
+    const stream = inp.pipe(from('gdb'))
+    let count = 0
+    stream.on('data', () => {
+      ++count
+      should(count).equal(1)
+      stream.destroy()
     })
   })
 })
