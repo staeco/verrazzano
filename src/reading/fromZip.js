@@ -16,6 +16,11 @@ export default ({ fileFilter, parser=gdalParser }) => {
   unzip(inStream, { fileFilter })
     .then(({ files, done }) => {
       finished(out, done)
+      if (files.length === 0) {
+        out.end()
+        inStream.destroy()
+        return
+      }
       files.forEach((f) => {
         try {
           outStream.add(parser(f))

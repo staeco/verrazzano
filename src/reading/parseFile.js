@@ -4,6 +4,8 @@ import mapValues from 'lodash.mapvalues'
 
 const wgs84 = gdal.SpatialReference.fromEPSG(4326)
 
+const maxLayers = 20
+
 const isGDALDate = (v) =>
   v && typeof v === 'object' && v.year != null && v.month != null && v.day != null
 
@@ -45,7 +47,7 @@ export default (path) => {
   return from.obj(function (size, next) {
     let pushed = 0
     const writeFeature = () => {
-      const isLastLayer = nextLayer === layerCount
+      const isLastLayer = nextLayer >= layerCount || nextLayer > maxLayers
 
       // grab the feature we're working with
       let feature = currentLayer.features.next()
