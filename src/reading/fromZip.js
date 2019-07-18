@@ -16,7 +16,7 @@ export default ({ fileFilter, parser=gdalParser }) => {
   unzip(inStream, { fileFilter })
     .then(({ files, done }) => {
       if (files.length === 0) {
-        outStream.destroy(new Error('Invalid file, nothing found!'))
+        out.destroy(new Error('Invalid file, nothing found!'))
         return
       }
       finished(out, done)
