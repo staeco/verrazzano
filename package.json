@@ -1,6 +1,6 @@
 {
   "name": "verrazzano",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Streaming geospatial format conversion",
   "main": "dist/index.js",
   "keywords": [

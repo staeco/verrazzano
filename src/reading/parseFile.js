@@ -4,8 +4,6 @@ import mapValues from 'lodash.mapvalues'
 
 const wgs84 = gdal.SpatialReference.fromEPSG(4326)
 
-const maxLayers = 20
-
 const isGDALDate = (v) =>
   v && typeof v === 'object' && v.year != null && v.month != null && v.day != null
 
@@ -47,7 +45,7 @@ export default (path) => {
   return from.obj(function (size, next) {
     let pushed = 0
     const writeFeature = () => {
-      const isLastLayer = nextLayer >= layerCount || nextLayer > maxLayers
+      const isLastLayer = nextLayer === layerCount
 
       // grab the feature we're working with
       let feature = currentLayer.features.next()
@@ -66,20 +64,20 @@ export default (path) => {
       let geometry
       try {
         geometry = feature.getGeometry()
-        geometry.transform(currentTransformation)
+        if (geometry) geometry.transform(currentTransformation)
       } catch (e) {
-        return writeFeature() // go to next feature in layer
+        return process.nextTick(writeFeature) // go to next feature in layer
       }
 
       const featureObject = {
         type: 'Feature',
         properties: mapValues(feature.fields.toObject(), fixDates),
-        geometry: geometry.toObject()
+        geometry: geometry ? geometry.toObject() : undefined
       }
       ++pushed
       this.push(featureObject)
       if (pushed >= size) return next(null) // no more space available to write, write what we have and wait
-      writeFeature() // more space available to write, go to next feature in layer
+      process.nextTick(writeFeature) // more space available to write, go to next feature in layer
     }
     writeFeature()
   })

@@ -6,6 +6,7 @@ import { from } from '../../src'
 
 const shapeFile = join(__dirname, '../fixtures/gdb-sacramento-crime.zip')
 const adverseShapeFile = join(__dirname, '../fixtures/gdb-adverse.zip')
+const emptyShapeFile = join(__dirname, '../fixtures/gdb-empty.zip')
 
 describe('from(gdb)', () => {
   it('should not blow up on create', () => {
@@ -15,7 +16,7 @@ describe('from(gdb)', () => {
     const inp = fs.createReadStream(shapeFile)
     const stream = inp.pipe(from('gdb'))
     const res = await collect.array(stream)
-    should(res.length).equal(327284)
+    should(res.length).equal(327668)
     should(res[0]).eql({
       type: 'Feature',
       properties: {
@@ -39,11 +40,11 @@ describe('from(gdb)', () => {
       }
     })
   })
-  it('should properly limit layers parsed', async () => {
+  it('should properly parse a file with bad geometries', async () => {
     const inp = fs.createReadStream(adverseShapeFile)
     const stream = inp.pipe(from('gdb'))
     const res = await collect.array(stream)
-    should(res.length).equal(197)
+    should(res.length).equal(41957)
     should(res[0]).deepEqual({
       type: 'Feature',
       properties: {
@@ -180,6 +181,14 @@ describe('from(gdb)', () => {
           ]
         ]
       }
+    })
+  })
+  it('should handle an empty file correctly', (done) => {
+    const inp = fs.createReadStream(emptyShapeFile)
+    const stream = inp.pipe(from('gdb'))
+    collect.array(stream).catch((err) => {
+      err.message.should.equal('Invalid file, nothing found!')
+      done()
     })
   })
 })
