@@ -1,6 +1,5 @@
 .DS_Store
 build
-dist
 lib-cov
 *.seed
 *.log
@@ -24,3 +23,4 @@ coverage
 *.orig
 .idea
 sandbox
+.nyc_output
