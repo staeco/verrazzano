@@ -1,22 +1,17 @@
 import { pipeline } from 'stream'
 import findit from 'findit2'
 import { spawn } from 'child_process'
+import { promisify } from 'util'
 import tmp from './tmp'
+
+const asyncPipeline = promisify(pipeline)
 
 // returns a stream that extracts specific files to a temp folder
 export default async (inStream, { fileFilter, cleanup=true }) => {
   const tmpZip = tmp('.zip')
   const tmpFolder = tmp()
 
-  await new Promise((resolve, reject) => {
-    pipeline(
-      inStream,
-      tmpZip.write(),
-      (err) => {
-        if (err) return reject(err)
-        resolve()
-      })
-  })
+  await asyncPipeline(inStream, tmpZip.write())
   await tmpFolder.mkdir()
   await new Promise((resolve, reject) => {
     const ps = spawn('unzip', [ '-d', tmpFolder.path, tmpZip.path ])

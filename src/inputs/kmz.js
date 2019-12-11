@@ -8,7 +8,8 @@ const fileFilter = (path) => path.match(/\.kml$/i)
 const parser = (path) =>
   pipeline(
     fs.createReadStream(path),
-    kml()
+    kml(),
+    () => {} // noop
   )
 
 export default () => fromZip({ fileFilter, parser })
