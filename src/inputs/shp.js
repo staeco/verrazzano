@@ -1,5 +1,11 @@
-import fromZip from '../reading/fromZip'
+import fromFile from '../ogr2ogr/fromFile'
 
 // Outputs GeoJSON Features
-const fileFilter = (path) => path.match(/\.shp$/i)
-export default () => fromZip({ fileFilter })
+export default () =>
+  fromFile({
+    layers: false,
+    extension: '.shp.zip',
+    parserOptions: {
+      format: 'ESRI Shapefile'
+    }
+  })

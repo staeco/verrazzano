@@ -42,7 +42,9 @@ export default () => {
   }
 
   return pumpify.obj(
-    fromFile({ extension: 'gpx' }),
+    fromFile({
+      extension: '.gpx'
+    }),
     through2.obj(accumulate, function (cb) {
       this.push(out)
       cb()

@@ -9,7 +9,7 @@ import gdalParser from './parseFile'
 // fromZip is for formats where gdal reads from the unzipped folder
 export default ({ fileFilter, parser=gdalParser }) => {
   const inStream = through2()
-  const outStream = merge({ objectMode: true })
+  const outStream = merge()
   const out = duplexify.obj(inStream, outStream)
 
   // start the work

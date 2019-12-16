@@ -3,15 +3,16 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _fromZip = _interopRequireDefault(require("../reading/fromZip"));
+var _fromFile = _interopRequireDefault(require("../ogr2ogr/fromFile"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Outputs GeoJSON Features
-const fileFilter = path => path.match(/\.gdb$/i);
-
-var _default = () => (0, _fromZip.default)({
-  fileFilter
+var _default = () => (0, _fromFile.default)({
+  extension: '.gdb.zip',
+  parserOptions: {
+    format: 'ESRI Shapefile'
+  }
 });
 
 exports.default = _default;

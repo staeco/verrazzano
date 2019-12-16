@@ -4,7 +4,7 @@ import fs from 'graceful-fs'
 import { join } from 'path'
 import { from } from '../../src'
 
-const shapeFile = join(__dirname, '../fixtures/shp-stations.zip')
+const shapeFile = join(__dirname, '../fixtures/shp-stations.shp.zip')
 const expectedGeoFile = fs.readFileSync(join(__dirname, '../fixtures/shp-stations.geojson'), 'utf8')
 
 describe('from(shp)', () => {

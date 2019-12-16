@@ -53,7 +53,7 @@ var _default = () => {
   };
 
   return _pumpify.default.obj((0, _fromFile.default)({
-    extension: 'gpx'
+    extension: '.gpx'
   }), _through.default.obj(accumulate, function (cb) {
     this.push(out);
     cb();
