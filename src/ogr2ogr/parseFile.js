@@ -19,7 +19,7 @@ const createHead = (path, layer, { format, flags=[] }={}) => {
       .skipfailures()
       .timeout(86400000) // 1 day in ms
       .options(options)
-      //.env({ RFC7946: 'YES' })
+      .env({ RFC7946: 'YES' })
       .stream()
     const tail = JSONStream.parse('features.*')
     const outStream = pumpify.obj(head, tail)
