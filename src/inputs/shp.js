@@ -1,11 +1,11 @@
-import fromFile from '../ogr2ogr/fromFile'
+import fromFile from '../reading/fromFile'
 
 // Outputs GeoJSON Features
 export default () =>
   fromFile({
-    layers: false,
     extension: '.shp.zip',
     parserOptions: {
-      format: 'ESRI Shapefile'
+      format: 'ESRI Shapefile',
+      layers: false
     }
   })

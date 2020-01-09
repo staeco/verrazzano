@@ -1,4 +1,4 @@
-import fromFile from '../ogr2ogr/fromFile'
+import fromFile from '../reading/fromFile'
 
 // Outputs GeoJSON Features
 export default () =>

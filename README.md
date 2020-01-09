@@ -18,7 +18,6 @@ npm install verrazzano --save
 
 - SHP
 - GDB
-- GPX
 - KML
 - KMZ
 - GeoJSON
@@ -26,9 +25,7 @@ npm install verrazzano --save
 ### Creation
 
 - SHP
-- GPX (Partial)
 - KML
-- KMZ
 - GeoJSON
 
 ## API

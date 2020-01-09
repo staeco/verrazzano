@@ -1,5 +1,5 @@
-import toZip from '../writing/toZip'
+import toFile from '../writing/toFile'
 
 // Outputs a KMZ file stream
-export default (opt) =>
-  toZip({ driver: 'KML' }, opt)
+export default () =>
+  toFile({ format: 'KMZ' })

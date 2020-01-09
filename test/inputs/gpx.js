@@ -7,7 +7,7 @@ import { from } from '../../src'
 const shapeFile = join(__dirname, '../fixtures/gpx-run.gpx')
 const expectedGeoFile = fs.readFileSync(join(__dirname, '../fixtures/gpx-run.geojson'), 'utf8')
 
-describe('from(gpx)', () => {
+describe.skip('from(gpx)', () => {
   it('should not blow up on create', () => {
     should.exist(from('gpx'))
   })

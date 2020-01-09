@@ -10,11 +10,11 @@ const shapeFile = join(__dirname, '../fixtures/kml-farmers-markets.geojson')
 const data = fs.readFileSync(shapeFile, 'utf8')
 const parsedData = JSON.parse(data)
 
-describe.skip('to(kml)', () => {
+describe('to(kml)', () => {
   it('should not blow up on create', () => {
     should.exist(to('kml'))
   })
-  it.skip('should translate objects to a kml file', async () => {
+  it('should translate objects to a kml file', async () => {
     const stream = pumpify.obj(
       streamify.object(parsedData.features),
       to('kml'),
@@ -29,7 +29,6 @@ describe.skip('to(kml)', () => {
       to('kml')
     )
     const res = await collect(stream)
-    console.log(res)
     should.exist(res)
   })
 })

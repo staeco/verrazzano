@@ -1,25 +1,24 @@
-import { finished } from 'stream'
+import ogr from 'ogr2ogr'
 import duplexify from 'duplexify'
-import toLayer from './toLayer'
-import tmp from '../fs/tmp'
+import through2 from 'through2'
+import toGeoJSON from '../outputs/geojson'
 
-// create a temp file, write features to gdal
-// gdal writes to disk, then pump from disk to out stream
-export default ({ driver, reader }, layerOptions) => {
-  const outStream = duplexify.obj()
-  const fail = (err) => outStream.destroy(err)
-  const tempFile = tmp()
-  const writeToDisk = toLayer(tempFile.path, driver, layerOptions)
-
-  finished(writeToDisk, { readable: false }, async (err) => {
-    if (err) return fail(err)
-    const readStream = reader ? await reader(tempFile).catch(fail) : tempFile.read()
-    outStream.setReadable(readStream)
-  })
-  finished(outStream, (err) => {
-    if (err) fail(err)
-    tempFile.destroy().catch(() => null)
-  })
-  outStream.setWritable(writeToDisk)
-  return outStream
+export default ({ format, flags=[] }={}) => {
+  try {
+    const head = toGeoJSON()
+    const tail = ogr(head, 'GeoJSON')
+      .format(format)
+      .project('crs:84')
+      .skipfailures()
+      .timeout(86400000) // 1 day in ms
+      .options(flags)
+      .env({ RFC7946: 'YES' })
+      .stream()
+    return duplexify.obj(head, tail)
+  } catch (err) {
+    // ogr2ogr blew up before constructing stream
+    const errStream = through2.obj()
+    process.nextTick(() => errStream.destroy(err))
+    return errStream
+  }
 }

@@ -1,84 +1,60 @@
-import from from 'from2'
-import gdal from 'gdal'
-import mapValues from 'lodash.mapvalues'
+import ogr from 'ogr2ogr'
+import JSONStream from 'JSONStream'
+import pumpify from 'pumpify'
+import through2 from 'through2'
+import merge from 'merge2'
+import getLayers from './getLayers'
 
-const wgs84 = gdal.SpatialReference.fromEPSG(4326)
-
-const isGDALDate = (v) =>
-  v && typeof v === 'object' && v.year != null && v.month != null && v.day != null
-
-const parseGDALDate = (time) => {
-  const utcTime = Date.UTC(
-    time.year || 0,
-    time.month - 1 || 0,
-    time.day || 0,
-    time.hour || 0,
-    time.minute - 1 || 0,
-    time.second || 0
-  )
-  if (!time.timezone) return new Date(utcTime).toISOString()
-  const offset = 60000 * (time.timezone / 100)
-  return new Date(utcTime + offset).toISOString()
+const createHead = (path, layer, { format, flags=[] }={}) => {
+  const options = [
+    ...flags,
+    '-mapFieldType', 'Date=String,Time=String'
+  ]
+  if (layer) options.push(layer)
+  const context = { path, layer }
+  try {
+    const head = ogr(path, format)
+      .format('GeoJSON')
+      .project('crs:84')
+      .skipfailures()
+      .timeout(86400000) // 1 day in ms
+      .options(options)
+      .env({ RFC7946: 'YES' })
+      .stream()
+    const tail = JSONStream.parse('features.*')
+    const outStream = pumpify.obj(head, tail)
+    outStream.context = context
+    return outStream
+  } catch (err) {
+    // ogr2ogr blew up before constructing stream
+    const errStream = through2.obj()
+    errStream.context = context
+    process.nextTick(() => errStream.destroy(err))
+    return errStream
+  }
 }
 
-const fixDates = (v) =>
-  isGDALDate(v) ? parseGDALDate(v) : v
-
-// GDAL File -> GeoJSON Features
-// Inspired by shp2json
-export default (path) => {
-  const file = gdal.open(path)
-  const layerCount = file.layers.count()
-  let nextLayer = 0
-  let currentLayer, currentTransformation
-
-  const getNextLayer = () => {
-    currentLayer = file.layers.get(nextLayer++)
-    currentTransformation = new gdal.CoordinateTransformation(
-      currentLayer.srs || wgs84,
-      wgs84
-    )
-  }
-
-  getNextLayer()
-
-  return from.obj(function (size, next) {
-    let pushed = 0
-    const writeFeature = () => {
-      const isLastLayer = nextLayer === layerCount
-
-      // grab the feature we're working with
-      let feature = currentLayer.features.next()
-      if (!feature) {
-        if (isLastLayer) {
-          // we hit the end of the final layer, finish
-          this.push(null)
-          return
-        }
-        // we hit the end of the layer, go to the next layer and continue
-        getNextLayer()
-        feature = currentLayer.features.next()
+export default (path, opt) => {
+  if (!opt.layers) return createHead(path, null, opt)
+  const out = pumpify.obj()
+  out.context = { path }
+  const tail = through2.obj()
+  getLayers(path)
+    .then((layers) => {
+      if (layers.length === 0) {
+        out.destroy(new Error('Invalid file!'))
+        return
       }
+      const head = layers.length === 1
+        ? createHead(path, null, opt)
+        : merge(layers.map((layer) =>
+          createHead(path, layer, opt)
+        ))
+      out.setPipeline(head, tail)
+    })
+    .catch(() => {
+      out.destroy(new Error('Invalid file!'))
+    })
 
-      // get the geometry and project the coordinates
-      let geometry
-      try {
-        geometry = feature.getGeometry()
-        if (geometry) geometry.transform(currentTransformation)
-      } catch (e) {
-        return process.nextTick(writeFeature) // go to next feature in layer
-      }
-
-      const featureObject = {
-        type: 'Feature',
-        properties: mapValues(feature.fields.toObject(), fixDates),
-        geometry: geometry ? geometry.toObject() : undefined
-      }
-      ++pushed
-      this.push(featureObject)
-      if (pushed >= size) return next(null) // no more space available to write, write what we have and wait
-      process.nextTick(writeFeature) // more space available to write, go to next feature in layer
-    }
-    writeFeature()
-  })
+  return out
 }
