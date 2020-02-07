@@ -1,4 +1,4 @@
-import gdal from 'gdal'
+import gdal from 'gdal-next'
 import through2 from 'through2'
 import wkx from 'wkx'
 import isDate from 'is-iso-date'
