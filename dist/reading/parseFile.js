@@ -5,13 +5,13 @@ exports.default = void 0;
 
 var _from = _interopRequireDefault(require("from2"));
 
-var _gdal = _interopRequireDefault(require("gdal"));
+var _gdalNext = _interopRequireDefault(require("gdal-next"));
 
 var _lodash = _interopRequireDefault(require("lodash.mapvalues"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const wgs84 = _gdal.default.SpatialReference.fromEPSG(4326);
+const wgs84 = _gdalNext.default.SpatialReference.fromEPSG(4326);
 
 const isGDALDate = v => v && typeof v === 'object' && v.year != null && v.month != null && v.day != null;
 
@@ -27,7 +27,7 @@ const fixDates = v => isGDALDate(v) ? parseGDALDate(v) : v; // GDAL File -> GeoJ
 
 
 var _default = path => {
-  const file = _gdal.default.open(path);
+  const file = _gdalNext.default.open(path);
 
   const layerCount = file.layers.count();
   let nextLayer = 0;
@@ -35,7 +35,7 @@ var _default = path => {
 
   const getNextLayer = () => {
     currentLayer = file.layers.get(nextLayer++);
-    currentTransformation = new _gdal.default.CoordinateTransformation(currentLayer.srs || wgs84, wgs84);
+    currentTransformation = new _gdalNext.default.CoordinateTransformation(currentLayer.srs || wgs84, wgs84);
   };
 
   getNextLayer();
