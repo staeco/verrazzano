@@ -1,11 +1,10 @@
 import gdal from 'gdal-next'
 import through2 from 'through2'
-import wkx from 'wkx'
 import isDate from 'is-iso-date'
 
-const wgs84 = gdal.SpatialReference.fromEPSG(4326)
-const getGeometry = (v) =>
-  gdal.Geometry.fromWKB(wkx.Geometry.parseGeoJSON(v.geometry || v).toWkb())
+const wgs84 = gdal.SpatialReference.fromProj4('+init=epsg:4326')
+const getGeometry = (v) => gdal.Geometry.fromGeoJson(v.geometry || v)
+
 const isInt = (n) => n % 1 === 0
 const getFieldType = (v) => {
   if (Array.isArray(v)) {
@@ -31,7 +30,6 @@ export default (path, driver, { layer='Export', geometryType=gdal.wkbUnknown }={
   const currentLayer = outFile.layers.create(layer, wgs84, geometryType)
   const layerFields = {}
   const setField = (newFeat, k, v) => {
-    // TODO: fix gdal malloc errors
     const fieldType = getFieldType(v)
     if (!fieldType) return // cant represent this in gdal, skip
     if (!layerFields[k]) {

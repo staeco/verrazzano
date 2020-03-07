@@ -3,11 +3,11 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _JSONStream = _interopRequireDefault(require("JSONStream"));
+var _jsonstreamNext = _interopRequireDefault(require("jsonstream-next"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _default = () => _JSONStream.default.parse('features.*');
+var _default = () => _jsonstreamNext.default.parse('features.*');
 
 exports.default = _default;
 module.exports = exports.default;

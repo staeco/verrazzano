@@ -7,15 +7,13 @@ var _gdalNext = _interopRequireDefault(require("gdal-next"));
 
 var _through = _interopRequireDefault(require("through2"));
 
-var _wkx = _interopRequireDefault(require("wkx"));
-
 var _isIsoDate = _interopRequireDefault(require("is-iso-date"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const wgs84 = _gdalNext.default.SpatialReference.fromEPSG(4326);
+const wgs84 = _gdalNext.default.SpatialReference.fromProj4('+init=epsg:4326');
 
-const getGeometry = v => _gdalNext.default.Geometry.fromWKB(_wkx.default.Geometry.parseGeoJSON(v.geometry || v).toWkb());
+const getGeometry = v => _gdalNext.default.Geometry.fromGeoJson(v.geometry || v);
 
 const isInt = n => n % 1 === 0;
 
@@ -51,7 +49,6 @@ var _default = (path, driver, {
   const layerFields = {};
 
   const setField = (newFeat, k, v) => {
-    // TODO: fix gdal malloc errors
     const fieldType = getFieldType(v);
     if (!fieldType) return; // cant represent this in gdal, skip
 

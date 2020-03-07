@@ -11,7 +11,7 @@ var _lodash = _interopRequireDefault(require("lodash.mapvalues"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const wgs84 = _gdalNext.default.SpatialReference.fromEPSG(4326);
+const wgs84 = _gdalNext.default.SpatialReference.fromProj4('+init=epsg:4326');
 
 const isGDALDate = v => v && typeof v === 'object' && v.year != null && v.month != null && v.day != null;
 

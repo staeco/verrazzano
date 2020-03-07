@@ -2,7 +2,7 @@ import from from 'from2'
 import gdal from 'gdal-next'
 import mapValues from 'lodash.mapvalues'
 
-const wgs84 = gdal.SpatialReference.fromEPSG(4326)
+const wgs84 = gdal.SpatialReference.fromProj4('+init=epsg:4326')
 
 const isGDALDate = (v) =>
   v && typeof v === 'object' && v.year != null && v.month != null && v.day != null

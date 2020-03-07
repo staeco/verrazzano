@@ -1,4 +1,4 @@
-import JSONStream from 'JSONStream'
+import JSONStream from 'jsonstream-next'
 
 export default () =>
   JSONStream.parse('features.*')
