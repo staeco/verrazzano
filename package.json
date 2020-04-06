@@ -1,6 +1,6 @@
 {
   "name": "verrazzano",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Streaming geospatial format conversion",
   "main": "dist/index.js",
   "keywords": [
@@ -50,7 +50,7 @@
     "build": "babel src --out-dir dist",
     "clean": "rimraf dist",
     "lint": "eslint src test --fix",
-    "test": "NODE_ENV=testing nyc mocha --require @babel/register --recursive --reporter spec --bail --exit --timeout 60000 && npm run-script lint"
+    "test": "NODE_ENV=testing nyc mocha --require @babel/register --recursive --reporter spec --bail --timeout 60000 && npm run-script lint"
   },
   "resolutions": {
     "end-of-stream": "github:isaacs/end-of-stream#custom-stream-premature-close-fix"
@@ -89,7 +89,7 @@
     "lodash.mapvalues": "^4.6.0",
     "lodash.pick": "^4.4.0",
     "merge2": "^1.2.3",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.0",
     "pumpify": "^2.0.0",
     "tempfile": "^3.0.0",
     "through2": "^3.0.1"
