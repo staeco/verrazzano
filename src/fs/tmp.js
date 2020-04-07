@@ -6,9 +6,7 @@ export default (ext) => {
   const path = tempfile(ext)
   return {
     path,
-    mkdir: () => new Promise((resolve, reject) => {
-      mkdirp(path, (err) => err ? reject(err) : resolve())
-    }),
+    mkdir: () => mkdirp(path),
     write: () => fs.createWriteStream(path),
     read: () => fs.createReadStream(path),
     destroy: () => new Promise((resolve, reject) =>

@@ -15,9 +15,7 @@ var _default = ext => {
   const path = (0, _tempfile.default)(ext);
   return {
     path,
-    mkdir: () => new Promise((resolve, reject) => {
-      (0, _mkdirp.default)(path, err => err ? reject(err) : resolve());
-    }),
+    mkdir: () => (0, _mkdirp.default)(path),
     write: () => _gracefulFs.default.createWriteStream(path),
     read: () => _gracefulFs.default.createReadStream(path),
     destroy: () => new Promise((resolve, reject) => _gracefulFs.default.unlink(path, err => err ? reject(err) : resolve()))
