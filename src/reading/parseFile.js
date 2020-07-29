@@ -7,18 +7,21 @@ const wgs84 = gdal.SpatialReference.fromProj4('+init=epsg:4326')
 const isGDALDate = (v) =>
   v && typeof v === 'object' && v.year != null && v.month != null && v.day != null
 
+
+// https://github.com/OSGeo/gdal/blob/e3a2bc5c3c474ca31c13950ac6d2555a2d9389c5/gdal/ogr/ogrsf_frmts/gtm/gtmwaypointlayer.cpp#L158
+// These date objects are really strange and non-standard
 const parseGDALDate = (time) => {
   const utcTime = Date.UTC(
     time.year || 0,
     time.month - 1 || 0,
     time.day || 0,
     time.hour || 0,
-    time.minute - 1 || 0,
+    time.minute || 0,
     time.second || 0
   )
-  if (!time.timezone) return new Date(utcTime).toISOString()
-  const offset = 60000 * (time.timezone / 100)
-  return new Date(utcTime + offset).toISOString()
+  if (!time.timezone || time.timezone === 1) return new Date(utcTime).toISOString()
+  const offset = (time.timezone - 100) * 15
+  return new Date(utcTime - offset).toISOString()
 }
 
 const fixDates = (v) =>
