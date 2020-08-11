@@ -1,6 +1,6 @@
 {
   "name": "verrazzano",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Streaming geospatial format conversion",
   "main": "dist/index.js",
   "keywords": [
@@ -79,7 +79,6 @@
   "dependencies": {
     "core-js": "3.0.0",
     "duplexify": "^4.0.0",
-    "end-of-stream": "github:isaacs/end-of-stream#custom-stream-premature-close-fix",
     "findit2": "^2.2.3",
     "from2": "^2.3.0",
     "gdal-next": "^2.0.0",
