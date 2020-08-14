@@ -3,7 +3,7 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _stream = require("stream");
+var _readableStream = require("readable-stream");
 
 var _toFile = _interopRequireDefault(require("./toFile"));
 
@@ -18,7 +18,7 @@ const reader = async tmpFolder => {
     cleanup: false
   });
   const outStream = zipFile.file.read();
-  (0, _stream.finished)(outStream, () => zipFile.done());
+  (0, _readableStream.finished)(outStream, () => zipFile.done());
   return outStream;
 };
 

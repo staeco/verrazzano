@@ -1,4 +1,4 @@
-import { finished } from 'stream'
+import { finished } from 'readable-stream'
 import toFile from './toFile'
 import zip from '../fs/zip'
 

@@ -1,4 +1,4 @@
-import { pipeline } from 'stream'
+import { pipeline } from 'readable-stream'
 import findit from 'findit2'
 import { spawn } from 'child_process'
 import { promisify } from 'util'

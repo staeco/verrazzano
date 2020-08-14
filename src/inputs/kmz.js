@@ -1,4 +1,4 @@
-import { pipeline } from 'stream'
+import { pipeline } from 'readable-stream'
 import fs from 'graceful-fs'
 import kml from 'kml-stream'
 import fromZip from '../reading/fromZip'

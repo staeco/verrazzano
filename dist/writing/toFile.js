@@ -3,7 +3,7 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _stream = require("stream");
+var _readableStream = require("readable-stream");
 
 var _duplexify = _interopRequireDefault(require("duplexify"));
 
@@ -25,14 +25,14 @@ var _default = ({
 
   const tempFile = (0, _tmp.default)();
   const writeToDisk = (0, _toLayer.default)(tempFile.path, driver, layerOptions);
-  (0, _stream.finished)(writeToDisk, {
+  (0, _readableStream.finished)(writeToDisk, {
     readable: false
   }, async err => {
     if (err) return fail(err);
     const readStream = reader ? await reader(tempFile).catch(fail) : tempFile.read();
     outStream.setReadable(readStream);
   });
-  (0, _stream.finished)(outStream, err => {
+  (0, _readableStream.finished)(outStream, err => {
     if (err) fail(err);
     tempFile.destroy().catch(() => null);
   });

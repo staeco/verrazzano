@@ -1,4 +1,4 @@
-import { pipeline } from 'stream'
+import { pipeline } from 'readable-stream'
 import fs from 'graceful-fs'
 import { promisify } from 'util'
 import tmp from '../fs/tmp'

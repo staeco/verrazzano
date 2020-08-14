@@ -3,7 +3,7 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _stream = require("stream");
+var _readableStream = require("readable-stream");
 
 var _duplexify = _interopRequireDefault(require("duplexify"));
 
@@ -42,7 +42,7 @@ var _default = ({
       return;
     }
 
-    (0, _stream.finished)(out, done);
+    (0, _readableStream.finished)(out, done);
     files.forEach(f => {
       try {
         outStream.add(parser(f));

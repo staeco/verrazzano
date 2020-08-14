@@ -1,6 +1,6 @@
 {
   "name": "verrazzano",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "Streaming geospatial format conversion",
   "main": "dist/index.js",
   "keywords": [
@@ -87,6 +87,7 @@
     "merge2": "^1.2.3",
     "mkdirp": "^1.0.0",
     "pumpify": "^2.0.0",
+    "readable-stream": "^3.6.0",
     "tempfile": "^3.0.0",
     "through2": "^4.0.0"
   }

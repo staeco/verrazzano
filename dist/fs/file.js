@@ -3,7 +3,7 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _stream = require("stream");
+var _readableStream = require("readable-stream");
 
 var _gracefulFs = _interopRequireDefault(require("graceful-fs"));
 
@@ -13,7 +13,7 @@ var _tmp = _interopRequireDefault(require("../fs/tmp"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const asyncPipeline = (0, _util.promisify)(_stream.pipeline);
+const asyncPipeline = (0, _util.promisify)(_readableStream.pipeline);
 
 var _default = async (inStream, ext) => {
   const tmpFile = (0, _tmp.default)(ext);

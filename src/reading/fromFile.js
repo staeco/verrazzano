@@ -1,4 +1,4 @@
-import { finished } from 'stream'
+import { finished } from 'readable-stream'
 import duplexify from 'duplexify'
 import through2 from 'through2'
 import merge from 'merge2'

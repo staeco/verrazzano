@@ -3,7 +3,7 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _stream = require("stream");
+var _readableStream = require("readable-stream");
 
 var _findit = _interopRequireDefault(require("findit2"));
 
@@ -15,7 +15,7 @@ var _tmp = _interopRequireDefault(require("./tmp"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const asyncPipeline = (0, _util.promisify)(_stream.pipeline); // returns a stream that extracts specific files to a temp folder
+const asyncPipeline = (0, _util.promisify)(_readableStream.pipeline); // returns a stream that extracts specific files to a temp folder
 
 var _default = async (inStream, {
   fileFilter,
