@@ -13,12 +13,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _default = ext => {
   const path = (0, _tempfile.default)(ext);
+
+  function _ref(resolve, reject) {
+    return _gracefulFs.default.unlink(path, err => err ? reject(err) : resolve());
+  }
+
   return {
     path,
     mkdir: () => (0, _mkdirp.default)(path),
     write: () => _gracefulFs.default.createWriteStream(path),
     read: () => _gracefulFs.default.createReadStream(path),
-    destroy: () => new Promise((resolve, reject) => _gracefulFs.default.unlink(path, err => err ? reject(err) : resolve()))
+    destroy: () => new Promise(_ref)
   };
 };
 

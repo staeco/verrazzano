@@ -16,7 +16,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Outputs GeoJSON Features
 const fileFilter = path => path.match(/\.kml$/i);
 
-const parser = path => (0, _readableStream.pipeline)(_gracefulFs.default.createReadStream(path), (0, _kmlStream.default)(), () => {} // noop
+function _ref() {}
+
+const parser = path => (0, _readableStream.pipeline)(_gracefulFs.default.createReadStream(path), (0, _kmlStream.default)(), _ref // noop
 );
 
 var _default = () => (0, _fromZip.default)({

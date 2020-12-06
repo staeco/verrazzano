@@ -15,13 +15,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const asyncPipeline = (0, _util.promisify)(_readableStream.pipeline);
 
+function _ref() {
+  return null;
+}
+
 var _default = async (inStream, ext) => {
   const tmpFile = (0, _tmp.default)(ext);
   await asyncPipeline(inStream, _gracefulFs.default.createWriteStream(tmpFile.path));
   return {
     file: tmpFile,
     done: () => {
-      tmpFile.destroy().catch(() => null);
+      tmpFile.destroy().catch(_ref);
     }
   };
 };

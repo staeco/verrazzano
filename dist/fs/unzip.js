@@ -17,6 +17,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const asyncPipeline = (0, _util.promisify)(_readableStream.pipeline); // returns a stream that extracts specific files to a temp folder
 
+function _ref() {
+  return null;
+}
+
 var _default = async (inStream, {
   fileFilter,
   cleanup = true
@@ -54,7 +58,7 @@ var _default = async (inStream, {
     folder: tmpFolder.path,
     files,
     done: () => {
-      tmpFolder.destroy().catch(() => null);
+      tmpFolder.destroy().catch(_ref);
     }
   };
 };

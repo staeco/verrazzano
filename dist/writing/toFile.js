@@ -13,6 +13,10 @@ var _tmp = _interopRequireDefault(require("../fs/tmp"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _ref() {
+  return null;
+}
+
 // create a temp file, write features to gdal
 // gdal writes to disk, then pump from disk to out stream
 var _default = ({
@@ -34,7 +38,7 @@ var _default = ({
   });
   (0, _readableStream.finished)(outStream, err => {
     if (err) fail(err);
-    tempFile.destroy().catch(() => null);
+    tempFile.destroy().catch(_ref);
   });
   outStream.setWritable(writeToDisk);
   return outStream;

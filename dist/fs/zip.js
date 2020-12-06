@@ -9,6 +9,10 @@ var _tmp = _interopRequireDefault(require("./tmp"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _ref() {
+  return null;
+}
+
 // returns a stream that zips a folder
 var _default = async (tmpFolder, {
   cleanup = true
@@ -25,7 +29,7 @@ var _default = async (tmpFolder, {
   return {
     file: tmpZip,
     done: () => {
-      tmpZip.destroy().catch(() => null);
+      tmpZip.destroy().catch(_ref);
     }
   };
 };

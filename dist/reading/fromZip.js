@@ -31,6 +31,14 @@ var _default = ({
   const out = _duplexify.default.obj(inStream, outStream); // start the work
 
 
+  function _ref(f) {
+    try {
+      outStream.add(parser(f));
+    } catch (err) {
+      out.destroy(err);
+    }
+  }
+
   (0, _unzip.default)(inStream, {
     fileFilter
   }).then(({
@@ -43,13 +51,7 @@ var _default = ({
     }
 
     (0, _readableStream.finished)(out, done);
-    files.forEach(f => {
-      try {
-        outStream.add(parser(f));
-      } catch (err) {
-        out.destroy(err);
-      }
-    });
+    files.forEach(_ref);
   }).catch(err => {
     inStream.emit('error', err); // triggers destroy of everything
   });
