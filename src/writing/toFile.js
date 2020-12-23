@@ -1,4 +1,4 @@
-import { finished } from 'readable-stream'
+import { finished } from 'stream'
 import duplexify from 'duplexify'
 import toLayer from './toLayer'
 import tmp from '../fs/tmp'

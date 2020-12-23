@@ -3,11 +3,9 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _readableStream = require("readable-stream");
+var _stream = require("stream");
 
 var _duplexify = _interopRequireDefault(require("duplexify"));
-
-var _through = _interopRequireDefault(require("through2"));
 
 var _merge = _interopRequireDefault(require("merge2"));
 
@@ -23,7 +21,7 @@ var _default = ({
   extension,
   parser = _parseFile.default
 }) => {
-  const inStream = (0, _through.default)();
+  const inStream = new _stream.PassThrough();
   const outStream = (0, _merge.default)({
     objectMode: true
   });
@@ -35,7 +33,7 @@ var _default = ({
     file,
     done
   }) => {
-    (0, _readableStream.finished)(out, done);
+    (0, _stream.finished)(out, done);
 
     try {
       outStream.add(parser(file.path));
