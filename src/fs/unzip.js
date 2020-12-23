@@ -7,7 +7,7 @@ import tmp from './tmp'
 const asyncPipeline = promisify(pipeline)
 
 // returns a stream that extracts specific files to a temp folder
-export default async (inStream, { fileFilter, cleanup=true }) => {
+export default async (inStream, { fileFilter, cleanup = true }) => {
   const tmpZip = tmp('.zip')
   const tmpFolder = tmp()
 

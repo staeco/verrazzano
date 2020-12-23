@@ -25,7 +25,7 @@ const getFieldType = (v) => {
   if (typeof v === 'string') return gdal.OFTString
 }
 
-export default (path, driver, { layer='Export', geometryType=gdal.wkbUnknown }={}) => {
+export default (path, driver, { layer = 'Export', geometryType = gdal.wkbUnknown } = {}) => {
   const outFile = gdal.open(path, 'w', driver)
   const currentLayer = outFile.layers.create(layer, wgs84, geometryType)
   const layerFields = {}

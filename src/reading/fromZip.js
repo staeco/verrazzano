@@ -6,7 +6,7 @@ import gdalParser from './parseFile'
 
 // Outputs GeoJSON Features
 // fromZip is for formats where gdal reads from the unzipped folder
-export default ({ fileFilter, parser=gdalParser }) => {
+export default ({ fileFilter, parser = gdalParser }) => {
   const inStream = new PassThrough()
   const outStream = merge({ objectMode: true })
   const out = duplexify.obj(inStream, outStream)

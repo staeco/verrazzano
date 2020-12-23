@@ -2,7 +2,7 @@ import { spawn } from 'child_process'
 import tmp from './tmp'
 
 // returns a stream that zips a folder
-export default async (tmpFolder, { cleanup=true }) => {
+export default async (tmpFolder, { cleanup = true }) => {
   const tmpZip = tmp('.zip')
   await new Promise((resolve, reject) => {
     const ps = spawn('zip', [ '-r9', tmpZip.path, tmpFolder.path ])
