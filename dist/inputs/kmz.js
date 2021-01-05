@@ -18,7 +18,7 @@ const fileFilter = path => path.match(/\.kml$/i);
 
 function _ref() {}
 
-const parser = path => (0, _stream.pipeline)(_gracefulFs.default.createReadStream(path), (0, _kmlStream.default)(), _ref // noop
+const parser = path => (0, _stream.pipeline)(_gracefulFs.default.createReadStream(path), new _kmlStream.default(), _ref // noop
 );
 
 var _default = () => (0, _fromZip.default)({
