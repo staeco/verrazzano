@@ -1,3 +1,3 @@
-import kml from 'kml-stream'
+import KML from 'kml-stream'
 
-export default () => kml()
+export default () => new KML()
