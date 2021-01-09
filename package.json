@@ -1,6 +1,6 @@
 {
   "name": "verrazzano",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "Streaming geospatial format conversion",
   "main": "dist/index.js",
   "keywords": [
@@ -79,7 +79,7 @@
     "gdal-next": "^2.0.0",
     "is-iso-date": "^0.0.1",
     "jsonstream-next": "^3.0.0",
-    "kml-stream": "github:contra/kml-stream",
+    "kml-stream": "^2.0.0",
     "lodash.mapvalues": "^4.6.0",
     "lodash.pick": "^4.4.0",
     "merge2": "^1.2.3",
