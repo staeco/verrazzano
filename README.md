@@ -12,6 +12,8 @@
 npm install verrazzano --save
 ```
 
+**Notice**: the `unzip` command must be available on the system in order to handle zipped inputs.
+
 ## Supported Formats
 
 ### Parsing
