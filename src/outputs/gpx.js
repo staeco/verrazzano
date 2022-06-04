@@ -1,4 +1,4 @@
-import gdal from 'gdal-next'
+import gdal from 'gdal-async'
 import toFile from '../writing/toFile'
 
 // Outputs a GPX file stream

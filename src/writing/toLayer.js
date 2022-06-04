@@ -1,4 +1,4 @@
-import gdal from 'gdal-next'
+import gdal from 'gdal-async'
 import through2 from 'through2'
 import isDate from 'is-iso-date'
 

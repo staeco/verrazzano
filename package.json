@@ -1,6 +1,6 @@
 {
   "name": "verrazzano",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "description": "Streaming geospatial format conversion",
   "main": "dist/index.js",
   "keywords": [
@@ -67,7 +67,7 @@
     "get-stream": "^6.0.0",
     "graceful-fs": "^4.1.15",
     "into-stream": "^6.0.0",
-    "mocha": "^8.0.0",
+    "mocha": "^10.0.0",
     "nyc": "^15.0.0",
     "rimraf": "^3.0.0",
     "should": "^13.0.0"
@@ -76,7 +76,7 @@
     "duplexify": "^4.0.0",
     "findit2": "^2.2.3",
     "from2": "^2.3.0",
-    "gdal-next": "^2.0.0",
+    "gdal-async": "^3.0.0",
     "is-iso-date": "^0.0.1",
     "jsonstream-next": "^3.0.0",
     "kml-stream": "^2.0.0",

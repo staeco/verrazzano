@@ -3,7 +3,7 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _gdalNext = _interopRequireDefault(require("gdal-next"));
+var _gdalAsync = _interopRequireDefault(require("gdal-async"));
 
 var _toFile = _interopRequireDefault(require("../writing/toFile"));
 
@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _default = (opt = {}) => (0, _toFile.default)({
   driver: 'GPX'
 }, {
-  geometryType: _gdalNext.default.wkbLineString,
+  geometryType: _gdalAsync.default.wkbLineString,
   ...opt
 });
 

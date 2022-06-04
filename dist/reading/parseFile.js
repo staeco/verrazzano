@@ -5,13 +5,13 @@ exports.default = void 0;
 
 var _from = _interopRequireDefault(require("from2"));
 
-var _gdalNext = _interopRequireDefault(require("gdal-next"));
+var _gdalAsync = _interopRequireDefault(require("gdal-async"));
 
 var _lodash = _interopRequireDefault(require("lodash.mapvalues"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const wgs84 = _gdalNext.default.SpatialReference.fromProj4('+init=epsg:4326');
+const wgs84 = _gdalAsync.default.SpatialReference.fromProj4('+init=epsg:4326');
 
 const isGDALDate = v => v && typeof v === 'object' && v.year != null && v.month != null && v.day != null; // https://github.com/OSGeo/gdal/blob/e3a2bc5c3c474ca31c13950ac6d2555a2d9389c5/gdal/ogr/ogrsf_frmts/gtm/gtmwaypointlayer.cpp#L158
 // These date objects are really strange and non-standard
@@ -29,7 +29,7 @@ const fixDates = v => isGDALDate(v) ? parseGDALDate(v) : v; // GDAL File -> GeoJ
 
 
 var _default = path => {
-  const file = _gdalNext.default.open(path);
+  const file = _gdalAsync.default.open(path);
 
   const layerCount = file.layers.count();
   let nextLayer = 0;
@@ -37,7 +37,7 @@ var _default = path => {
 
   const getNextLayer = () => {
     currentLayer = file.layers.get(nextLayer++);
-    currentTransformation = new _gdalNext.default.CoordinateTransformation(currentLayer.srs || wgs84, wgs84);
+    currentTransformation = new _gdalAsync.default.CoordinateTransformation(currentLayer.srs || wgs84, wgs84);
   };
 
   getNextLayer();

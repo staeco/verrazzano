@@ -1,5 +1,5 @@
 import from from 'from2'
-import gdal from 'gdal-next'
+import gdal from 'gdal-async'
 import mapValues from 'lodash.mapvalues'
 
 const wgs84 = gdal.SpatialReference.fromProj4('+init=epsg:4326')
